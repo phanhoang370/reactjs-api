@@ -6,15 +6,15 @@ import axios from 'axios';
 //import apiCaller from './../../utils/apiCaller';
 import callApi from '../../utils/apiCaller';
 import {Link} from 'react-router-dom';
-import {actFetchProductsRequest} from './../../actions/index';
+import {actFetchProductsRequest, actDeleteProductsRequest} from './../../actions/index';
 
 class ProductListPage extends Component {
   constructor (props) {
     super(props);
 
-    this.state={
-      products:[]
-    };
+    // this.state={
+    //   products:[]
+    // };
   }
   componentDidMount() {
     // callApi('products', 'GET', null).then(res =>{
@@ -26,18 +26,21 @@ class ProductListPage extends Component {
     this.props.fetchAllProducts();
   }
   onDelete = (id) => {
-    var {products}=this.state;
-    callApi(`products/${id}`, 'DELETE', null).then(res =>{
-      if(res.status === 200) {
-        var index=this.findIndex(products, id);
-        if(index !== -1) {
-          products.splice(index, 1);
-          this.setState({
-            products
-          });
-        }
-      }
-    });
+    // var {products}=this.state;
+    // callApi(`products/${id}`, 'DELETE', null).then(res =>{
+    //   if(res.status === 200) {
+    //     var index=this.findIndex(products, id);
+    //     if(index !== -1) {
+    //       products.splice(index, 1);
+    //       this.setState({
+    //         products
+    //       });
+    //     }
+    //   }
+    // });
+
+  this.props.onDeteteProduct(id);
+
   }
   findIndex = (products, id) => {
     var result=-1;
@@ -90,7 +93,10 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     fetchAllProducts : () =>{
       dispatch(actFetchProductsRequest());
-    }
+    },
+      onDeteteProduct :(id) => {
+      dispatch(actDeleteProductsRequest(id));
+      }
   }
 }
 
