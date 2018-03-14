@@ -31,3 +31,47 @@ export const actDeleteProduct = (id) => {
         id
     }
 }
+export const actAddProductsRequest = (product) => {
+    return (dispatch) => {
+        return callApi('products', 'POST', product).then(res =>{
+            dispatch(actAddProduct(res.data));
+        });
+    };
+}
+
+export const actAddProduct = (product) => {
+    return {
+        type:Types.ADD_PRODUCT,
+        product
+    }
+}
+
+export const actEditProductsRequest = (id) => {
+    return (dispatch) => {
+        return callApi(`products/${id}`, 'GET', null).then(res =>{
+            dispatch(actEditProduct(res.data));
+        });
+    };
+}
+
+export const actEditProduct = (product) => {
+    return {
+        type:Types.EDIT_PRODUCT,
+        product
+    }
+}
+
+export const actUpdateProductsRequest = (product) => {
+    return (dispatch) => {
+        return callApi(`products/${product.id}`, 'PUT', product).then(res =>{
+            dispatch(actUpdateProduct(res.data));
+        });
+    };
+}
+
+export const actUpdateProduct = (product) => {
+    return {
+        type:Types.UPDATE_PRODUCT,
+        product
+    }
+}
